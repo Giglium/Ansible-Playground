@@ -1,0 +1,20 @@
+---
+# This role contains the task for check if the partition have enough space, otherwise it will resize them
+
+- name: Assert {{partition}} partition is expanded enough
+  assert:
+    that: "item.mount == {{partition}} and item.size_total >= {{partition_required_size_bytes}}"
+  with_items: '{{ ansible_mounts }}'
+  ignore_errors: yes
+  register: disk_free
+
+- name: install lvm2 tools
+  package:
+    name:
+      - lvm2
+    state: present
+  when: disk_free is failed
+
+- name: Resize {{partition_device}} device in orter to have {{partition_required_size_gigabytes}}
+  command: fsadm -y resize {{partition_device}} {{partition_required_size_gigabytes}}
+  when: disk_free is failed

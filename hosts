@@ -1,0 +1,9 @@
+[centOs]
+machine1
+machine2
+
+[centOs:vars]
+ansible_connection=ssh
+ansible_user=vagrant
+http_port=22
+ansible_ssh_common_args='-o UserKnownHostsFile=/dev/null'

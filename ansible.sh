@@ -6,6 +6,7 @@
 ANSIBLE_COMMAND=(
 	start
 	stop
+	run
 	help
 )
 
@@ -57,6 +58,12 @@ fi
 #
 if [[ $command == stop ]]; then
 	vagrant destroy
+fi
+#
+# Run ansible playbook
+#
+if [[ $command == run ]]; then
+	ansible-playbook -i hosts -v main.yml
 fi
 # Display the helper
 #

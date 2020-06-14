@@ -1,0 +1,25 @@
+language: python
+
+os:
+  - linux
+
+dist: bionic
+
+git:
+  depth: false
+  submodules: false
+
+install:
+  - pip install ansible-lint
+
+script:
+  - ansible-lint .
+
+branches:
+  only:
+    master
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always

@@ -1,0 +1,13 @@
+---
+# This playbook will check if the partition have enough space, otherwise it will resize them
+
+- name: Check if the partition have enough space, otherwise it will resize them
+  hosts: centOs
+  become_user: root
+  become: true
+
+  vars_files:
+    - ./group_vars/all.yml
+
+  roles:
+    - check_disk

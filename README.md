@@ -7,7 +7,7 @@
 During this playground I'm going to:
 
 * Creating 2 CentOs VM to Provisioning (It's for running this playbook on a local environment);
-* ~~Check the disk size on the VM, if this is lower to 40GB resize them~~;
+* Check the disk size on the VM and if this is lower to 40GB resize them;
 * ~~Setup Docker on the VM~~;
 * ~~Docker Configuration~~:
   * ~~expose the docker API~~;
@@ -27,6 +27,9 @@ During this playground I'm going to:
 
 ./ansible.sh start
 
+# Run Ansible playbook
+./ansible.sh run
+
 #Shoutdown and destroy Vagrant VM
 
 . ./ansible.sh stop
@@ -40,3 +43,12 @@ If you have two remote hosts, you want to run in on the localhost or you don't w
 
 > For accessing throw ssh, without using [Vagrant](https://www.vagrantup.com/), to the created VM I copy the `ssh_public_hey` from the local machine to the two VM. This script was founded on [StackOverflow](https://stackoverflow.com/questions/30075461/how-do-i-add-my-own-public-key-to-vagrant-vm) and it isn't idempotent so it will add a line at every provision, but since this is out of the scope of this playground. So be careless if you are going to use them for other purposes.
 
+> For connecting more easily to the VM I have added the following line: `ansible_ssh_common_args='-o UserKnownHostsFile=/dev/null'` to the `[centOS]` group. Remember to remove or comment this line if you connect to a remote to avoid man in the middle attack
+
+## Check Disk
+
+With this role, Ansible is going to check if the total size of the given partition has enough space to install Docker lately. For doing this it loops inside the `ansible_mounts` variable searching for the given partition and checking is size, storing the results of this operation on the variable `disk_free`.
+
+If the check fails firstly it will install lvm2 (if it isn't already installed)  to be sure of having all the tools for the resizing.
+
+Secondly, it calls [fsadm](https://www.systutorials.com/docs/linux/man/8-fsadm/) to resize the file system for us.
