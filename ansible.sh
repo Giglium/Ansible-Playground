@@ -7,6 +7,7 @@ ANSIBLE_COMMAND=(
 	start
 	stop
 	run
+	setup
 	help
 )
 
@@ -63,8 +64,15 @@ fi
 # Run ansible playbook
 #
 if [[ $command == run ]]; then
-	ansible-playbook -i hosts -v main.yml
+	ansible-playbook -v main.yml
 fi
+#
+# Set up the environment
+#
+if [[ $command == setup ]]; then
+  ansible-galaxy role install -r requirements.yml
+fi
+#
 # Display the helper
 #
 if [[ $command == help ]]; then

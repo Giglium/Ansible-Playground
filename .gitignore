@@ -1,6 +1,9 @@
 ### Ansible ###
 *.retry
 
+### Ansible Galaxy Repo ###
+geerlingguy.docker/
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml

@@ -1,7 +1,6 @@
----
-# This playbook will check if the partition have enough space, otherwise it will resize them
+# This playbook will check if the partition have enough space, otherwise it will resize them, after that it will install Docker
 
-- name: Check if the partition have enough space, otherwise it will resize them
+- name: Install Docker on the centOS group machine
   hosts: centOs
   become_user: root
   become: true
@@ -10,4 +9,10 @@
     - ./group_vars/all.yml
 
   roles:
-    - check_disk
+    # Check if the disk have enough space
+    - role: check_disk
+      tags: [ setup ]
+
+    # Install Docker
+    - role: geerlingguy.docker
+      tags: [ docker ]
