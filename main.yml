@@ -16,3 +16,7 @@
     # Install Docker
     - role: geerlingguy.docker
       tags: [ docker ]
+
+    # Enable docker api
+    - role: enable_docker_api
+      tags: [ docker ]

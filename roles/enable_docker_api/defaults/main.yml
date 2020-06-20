@@ -1,0 +1,10 @@
+# Enable Docker API Default Variable
+
+# Tasks variable
+docker_override_conf_filename: "startup_options.conf"
+docker_override_conf_file: "/etc/systemd/system/docker.service.d/{{ docker_override_conf_filename }}"
+docker_override_conf_path: "{{ docker_override_conf_file | dirname }}"
+
+# Templates variable
+docker_api_ip: "0.0.0.0"
+docker_api_port: "2376"

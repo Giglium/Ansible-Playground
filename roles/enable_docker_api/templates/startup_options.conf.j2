@@ -1,0 +1,4 @@
+# /etc/systemd/system/docker.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://{{ docker_api_ip }}:{{ docker_api_port }}

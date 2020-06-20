@@ -15,6 +15,6 @@
     state: present
   when: disk_free is failed
 
-- name: Resize {{ partition_device }} device in orter to have {{ partition_required_size_gigabytes }}
+- name: Resize {{ partition_device }} device in order to have {{ partition_required_size_gigabytes }}
   command: fsadm -y resize {{ partition_device }} {{ partition_required_size_gigabytes }}
   when: disk_free is failed
