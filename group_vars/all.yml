@@ -1,9 +1,3 @@
-# partition
-partition: "'/'"
-partition_device: "/dev/vda1"
-partition_required_size_bytes: 42949672960 # 40 GB
-partition_required_size_gigabytes: "{{ (partition_required_size_bytes /1024 /1024 /1024)|int }}G"
-
 # Geerlingguy Docker Variable
 docker_install_compose: false
 docker_users: []
