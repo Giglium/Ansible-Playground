@@ -10,7 +10,7 @@ During this playground I'm going to:
 * check the disk size on the VM and if this is lower to 40GB resize them;
 * install Docker on the VM;
 * configure Docker:
-  * ~~expose the docker API~~;
+  * expose the docker API;
   * run docker on system startup;
 *  ~~create a Docker swarm~~.
 
@@ -25,7 +25,7 @@ During this playground I'm going to:
 ```bash
 #
 # Setup the enviroment and download all the role from Ansible Galaxy
-#
+#docker_cert_ca_path
 ./ansible.sh setup
 #
 # Starting the Vagrant VM
@@ -35,6 +35,10 @@ During this playground I'm going to:
 # Run Ansible playbookinstad
 #
 ./ansible.sh run
+#
+# Check the connection with the docker API
+#
+./ansible.sh check
 #
 #Shoutdown and destroy Vagrant VM
 #
@@ -74,3 +78,10 @@ With this role will also install *Docker-Compose* but since this program is not 
 #### Docker on Startup
 
 [Geerlingguy](https://galaxy.ansible.com/geerlingguy/docker) role will ensure that Docker is started and enabled at boot, so we don't have to do anything.
+
+#### Expose the docker API
+
+In order to complete this task, I've followed this [guide](https://success.docker.com/article/how-do-i-enable-the-remote-api-for-dockerd) and so I've created the role `enable_docker_api` that creates a configuration file that overrides the docker configuration and it will expose the API on port `2376`. To secure the communication between a client and the server I've allows all the connections from clients authenticated by a certificate. For this reason, the `enable_docker_api` roles will also copy all the certificates for each machine.
+
+> The self-signed certificate provided in this repo is generated with [OMGWTFSSL](https://github.com/paulczar/omgwtfssl) please don't use them with remote hosts. 
+

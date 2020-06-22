@@ -2,24 +2,6 @@
 # This role contains the task enable docker API
 # Inspired by this solution: https://success.docker.com/article/how-do-i-enable-the-remote-api-for-dockerd
 
-- name: Check if configuration file ({{ docker_override_conf_file }}) already exsists
-  stat:
-    path: "{{ docker_override_conf_file }}"
-  register: config_exists
+- include_tasks: copy_cert.yml
 
-- name: Create directory ({{ docker_override_conf_path }}) if it doesn't exist
-  file:
-    path: "{{ docker_override_conf_path }}"
-    state: directory
-  when: not config_exists.stat.exists
-
-- name: Enable REST API on {{ docker_api_ip }}:{{ docker_api_port }}
-  become: yes
-  template:
-    src: startup_options.conf.j2
-    dest: "{{ docker_override_conf_file }}"
-    mode: '666'
-    force: yes
-  notify:
-    - restart-docker
-  when: not config_exists.stat.exists
+- include_tasks: override_conf.yml

@@ -1,10 +1,20 @@
 # Enable Docker API Default Variable
 
-# Tasks variable
 docker_override_conf_filename: "startup_options.conf"
 docker_override_conf_file: "/etc/systemd/system/docker.service.d/{{ docker_override_conf_filename }}"
 docker_override_conf_path: "{{ docker_override_conf_file | dirname }}"
 
-# Templates variable
 docker_api_ip: "0.0.0.0"
 docker_api_port: "2376"
+
+docker_cert_ca: "{{ inventory_hostname }}-ca.pem"
+docker_cert_ca_file: "/home/vagrant/cert/{{ docker_cert_ca }}"
+docker_cert_ca_path: "{{ docker_cert_ca_file | dirname }}"
+
+docker_cert_se: "{{ inventory_hostname }}-server-cert.pem"
+docker_cert_se_file: "/home/vagrant/cert/{{ docker_cert_se }}"
+docker_cert_se_path: "{{ docker_cert_se_file | dirname }}"
+
+docker_key_se: "{{ inventory_hostname }}-server-key.pem"
+docker_key_se_file: "/home/vagrant/cert/{{ docker_key_se }}"
+docker_key_se_path: "{{ docker_key_se_file | dirname }}"

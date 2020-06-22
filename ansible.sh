@@ -8,6 +8,7 @@ ANSIBLE_COMMAND=(
 	stop
 	run
 	setup
+	check
 	help
 )
 
@@ -71,6 +72,19 @@ fi
 #
 if [[ $command == setup ]]; then
   ansible-galaxy role install -r requirements.yml
+fi
+#
+# Check the docker API connection
+#
+if [[ $command == check ]]; then
+  for machine in machine1 machine2
+  do
+    echo "Ping $machine"
+    curl https://$machine:2376/version \
+      --cert ./roles/enable_docker_api/files/$machine-server-cert.pem \
+      --key ./roles/enable_docker_api/files/$machine-server-key.pem \
+      --cacert ./roles/enable_docker_api/files/$machine-ca.pem
+  done
 fi
 #
 # Display the helper

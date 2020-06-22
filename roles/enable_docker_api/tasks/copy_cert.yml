@@ -1,0 +1,24 @@
+---
+- name: Check if cert file already exsists
+  stat:
+    path: "{{ item.file }}"
+  register: certs
+  with_items:
+    - { filename: "{{ docker_cert_ca }}", path: "{{ docker_cert_ca_path }}", file: "{{ docker_cert_ca_file }}" }
+    - { filename: "{{ docker_cert_se }}", path: "{{ docker_cert_se_path }}", file: "{{ docker_cert_se_file }}" }
+    - { filename: "{{ docker_key_se }}", path: "{{ docker_key_se_path }}", file: "{{ docker_key_se_file }}" }
+
+- name: Create directory if it doesn't exist
+  file:
+    path: "{{ item.item.path }}"
+    state: directory
+  with_items: "{{ certs.results }}"
+  when: item.stat.exists == False
+
+- name: Copy cert files
+  copy:
+    src: "{{ item.item.filename }}"
+    dest: "{{ item.item.file }}"
+    mode: '0444'
+  with_items: "{{ certs.results }}"
+  when: item.stat.exists == False
