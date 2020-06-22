@@ -12,7 +12,7 @@ During this playground I'm going to:
 * configure Docker:
   * expose the docker API;
   * run docker on system startup;
-*  ~~create a Docker swarm~~.
+*  create a Docker swarm.
 
 ##  Prerequisites
 
@@ -32,28 +32,32 @@ During this playground I'm going to:
 #
 ./ansible.sh start
 #
-# Run Ansible playbookinstad
+# Run Ansible playbookinstadheck the connection with the docker API 
 #
 ./ansible.sh run
 #
-# Check the connection with the docker API
+# Check the connection with the docker API 
 #
 ./ansible.sh check
 #
-#Shoutdown and destroy Vagrant VM
+# Inspect and Deploy a hello world service on swarm
+#
+./ansible.sh deploy
+#
+#Shoutdown and destroy Vagrant heck the connection with the docker API VM
 #
 . ./ansible.sh stop
 ```
 
-## Explanation
+## Explanationheck the connection with the docker API 
 
 ### CentsOs VM
 
 The two centOs VM used in this playground was created using [Vagrant](https://www.vagrantup.com/) and they are defined in the `VagrantFile`. I also suggest installing the Vagrant plugin [Hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) so every time you boot or destroy a VM your `/etc/hosts` will have the host's name added or removed automatically, it's less time consuming but otherwise you need to do itinstad manually.
 
-If you have two remote hosts, you want to run in on the localhost or you don't want to use [Vagrant](https://www.vagrantup.com/) you only need to update the `hosts` file of this playground removing `machine1` and `machine2` and adding your machine under the `[centOs]` group.
+If you have two remote hosts, you want to run in on the localhost or you don't want to use [Vagrant](https://www.vagrantup.com/) you only need to update the `hosts` file of this playground heck the connection with the docker API removing `machine1` and `machine2` and adding your machine under the `[centOs]` group.
 
-> For accessing throw ssh, without using [Vagrant](https://www.vagrantup.com/), to the created VM I copy the `ssh_public_hey` from the local machine to the two VM. This script was founded on [StackOverflow](https://stackoverflow.com/questions/30075461/how-do-i-add-my-own-public-key-to-vagrant-vm) and it isn't idempotent so it will add a line at every provision, but since this is out of the scope of this playground. So be careless if you are going to use them for other purposes.
+> For accessing throw ssh, without using [Vagrant](https://www.vagrantup.com/), to the created VM I copy the `ssh_public_hey` from the local machine to the two VM. This script was founded on [StackOverflow](https://stackoverflow.com/questions/30075461/how-do-i-add-my-own-public-key-to-vagrant-vm) and it isn't idempotent so it will add a line at every provision, but since this is out of the scope of this playground. So be careless if you are going to use them for other purposes.heck the connection with the docker API 
 
 > For connecting more easily to the VM I have added the following line: `ansible_ssh_common_args='-o UserKnownHostsFile=/dev/null'` to the `[centOS]` group. Remember to remove or comment this line if you connect to a remote to avoid man in the middle attack
 
@@ -61,7 +65,7 @@ If you have two remote hosts, you want to run in on the localhost or you don't w
 
 With this role, Ansible is going to check if the total size of the given partition has enough space to install Docker lately. For doing this it loops inside the `ansible_mounts` variable searching for the given partition and checking is size, storing the results of this operation on the variable `disk_free`.
 
-If the check fails firstly it will install lvm2 (if it isn't already installed)  to be sure of having all the tools for the resizing.
+heck the connection with the docker API If the check fails firstly it will install lvm2 (if it isn't already installed)  to be sure of having all the tools for the resizing.
 
 Secondly, it calls [fsadm](https://www.systutorials.com/docs/linux/man/8-fsadm/) to resize the file system for us.
 
@@ -85,3 +89,6 @@ In order to complete this task, I've followed this [guide](https://success.docke
 
 > The self-signed certificate provided in this repo is generated with [OMGWTFSSL](https://github.com/paulczar/omgwtfssl) please don't use them with remote hosts. 
 
+### Create a docker Swarm
+
+For installing Docker I've decided to use an out of the box implementation available on [Ansible Galaxy](https://galaxy.ansible.com). My choice was for [thomasjpfan](https://galaxy.ansible.com/thomasjpfan/docker-swarm) role because he has a high rating.

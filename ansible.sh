@@ -80,11 +80,27 @@ if [[ $command == check ]]; then
   for machine in machine1 machine2
   do
     echo "Ping $machine"
-    curl https://$machine:2376/version \
+    curl https://$machine:2376/swarm \
       --cert ./roles/enable_docker_api/files/$machine-server-cert.pem \
       --key ./roles/enable_docker_api/files/$machine-server-key.pem \
       --cacert ./roles/enable_docker_api/files/$machine-ca.pem
   done
+fi
+#
+# Inspect and Deploy a hello world service on swarm
+#
+if [[ $command == deploy ]]; then
+  curl https://machine1:2376/swarm \
+    --cert ./roles/enable_docker_api/files/machine1-server-cert.pem \
+    --key ./roles/enable_docker_api/files/machine1-server-key.pem \
+    --cacert ./roles/enable_docker_api/files/machine1-ca.pem
+  curl https://machine1:2376/services/create \
+    --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"Name": "web","TaskTemplate": {"ContainerSpec": {"Image": "hello-world:latest"}}}' \
+    --cert ./roles/enable_docker_api/files/machine1-server-cert.pem \
+    --key ./roles/enable_docker_api/files/machine1-server-key.pem \
+    --cacert ./roles/enable_docker_api/files/machine1-ca.pem
 fi
 #
 # Display the helper
@@ -92,3 +108,5 @@ fi
 if [[ $command == help ]]; then
 	help_info;
 fi
+
+

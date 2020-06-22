@@ -3,6 +3,7 @@
 
 ### Ansible Galaxy Repo ###
 geerlingguy.docker/
+thomasjpfan.docker-swarm/
 
 # User-specific stuff
 .idea/**/workspace.xml

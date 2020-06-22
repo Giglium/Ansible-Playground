@@ -2,3 +2,6 @@ roles:
   - name: geerlingguy.docker
     version: 2.8.1
     source: https://galaxy.ansible.com
+  - name: thomasjpfan.docker-swarm
+    version: 1.0.5
+    source: https://galaxy.ansible.com

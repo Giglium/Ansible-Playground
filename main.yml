@@ -20,3 +20,6 @@
     # Enable docker api
     - role: enable_docker_api
       tags: [ docker ]
+
+    - role: thomasjpfan.docker-swarm
+      tags: [ swarm ]
