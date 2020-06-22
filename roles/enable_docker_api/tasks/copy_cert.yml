@@ -13,7 +13,7 @@
     path: "{{ item.item.path }}"
     state: directory
   with_items: "{{ certs.results }}"
-  when: item.stat.exists == False
+  when: not item.stat.exists
 
 - name: Copy cert files
   copy:
@@ -21,4 +21,4 @@
     dest: "{{ item.item.file }}"
     mode: '0444'
   with_items: "{{ certs.results }}"
-  when: item.stat.exists == False
+  when: not item.stat.exists
