@@ -80,7 +80,7 @@ if [[ $command == check ]]; then
   for machine in machine1 machine2
   do
     echo "Ping $machine"
-    curl https://$machine:2376/swarm \
+    curl https://$machine:2376/version \
       --cert ./roles/enable_docker_api/files/$machine-server-cert.pem \
       --key ./roles/enable_docker_api/files/$machine-server-key.pem \
       --cacert ./roles/enable_docker_api/files/$machine-ca.pem
