@@ -49,7 +49,7 @@ During this playground I'm going to:
 . ./ansible.sh stop
 ```
 
-## Explanationheck the connection with the docker API 
+## Explanation
 
 ### CentsOs VM
 
